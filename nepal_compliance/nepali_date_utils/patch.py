@@ -116,9 +116,9 @@ def apply_runtime_patches():
             except Exception:
                 return _orig_formatdate(value, format)
 
-        def patched_make_xlsx(data, sheet_name, wb=None, column_widths=None):
+        def patched_make_xlsx(data, sheet_name, wb=None, column_widths=None, **kwargs):
             if not is_bs_enabled():
-                return _orig_make_xlsx(data, sheet_name, wb, column_widths)
+                return _orig_make_xlsx(data, sheet_name, wb, column_widths, **kwargs)
 
             converted = []
             for row in data:
@@ -132,7 +132,7 @@ def apply_runtime_patches():
                     new_row.append(val)
                 converted.append(new_row)
 
-            return _orig_make_xlsx(converted, sheet_name, wb, column_widths)
+            return _orig_make_xlsx(converted, sheet_name, wb, column_widths, **kwargs)
 
         def patched_to_csv(data):
             if not is_bs_enabled():
